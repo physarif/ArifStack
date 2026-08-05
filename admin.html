@@ -6,18 +6,22 @@
   <title>Arif Stack — Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #fafaf9; --surface: #ffffff; --border: #ebebeb; --border2: #e0e0e0;
-      --accent: #5D91E4; --accent-soft: #e8f0fc; --text: #1a1a1a; --muted: #9a9a9a;
+      --accent: #FF9200; --accent-soft: #ffead0; --text: #1a1a1a; --muted: #9a9a9a;
       --muted2: #c4c4c4; --success: #3a9e6e; --success-soft: #edf7f2;
       --error: #d94f4f; --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0d1117; --surface: #161b22; --border: #30363d; --border2: #3d444d;
-        --accent: #5D91E4; --accent-soft: #1a2d45; --text: #e6edf3; --muted: #7d8590;
+        --accent: #FF9200; --accent-soft: #3d2a12; --text: #e6edf3; --muted: #7d8590;
         --muted2: #3d444d; --success: #3fb950; --success-soft: #0d2119;
         --error: #f85149; --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
       }
@@ -30,7 +34,7 @@
         #bottomTabBar { box-shadow: 2px 0 20px rgba(0,0,0,0.4); border-right-color: #30363d; }
       }
     }
- 
+
     body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-user-select:none; user-select:none; }
     input, textarea, select, .fi-name-input { -webkit-user-select:text; user-select:text; }
 
@@ -38,7 +42,7 @@
     @keyframes fadeUp   { from{opacity:0;transform:translateY(12px)}  to{opacity:1;transform:translateY(0)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
     @keyframes shimmer  { to{background-position:-200% 0} }
- 
+
     /* ── BOTTOM TAB BAR (mobile) ── */
     #bottomTabBar {
       position: fixed; bottom: 12px; left: 28px; right: 28px; z-index: 200;
@@ -106,8 +110,8 @@
         margin-top: auto;
         flex-shrink: 0;
       }
-    #sidebar-brand { display: none; }
-    #sidebar-footer { display: none; }
+      #sidebar-brand { display: none; }
+      #sidebar-footer { display: none; }
       .tab-item {
         flex: none;
         flex-direction: row;
@@ -177,6 +181,37 @@
     .field input:focus, .field textarea:focus, .field select:focus { border-color:var(--accent); }
     .field textarea { resize:vertical; min-height:70px; }
     .field-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+
+    /* Quill editor theming */
+    .vi-editor-wrap { display:flex; flex-direction:column; border-radius:8px; transition:box-shadow 0.15s ease; }
+    .vi-editor-wrap:focus-within { box-shadow:0 0 0 3px var(--accent-soft); border-radius:8px; }
+    #vi-fContent-editor .ql-toolbar.ql-snow {
+      border:1px solid var(--border);
+      border-radius:8px 8px 0 0;
+      background:var(--bg);
+      padding:10px 12px;
+    }
+    #vi-fContent-editor .ql-toolbar.ql-snow .ql-formats { margin-right:0.65rem; margin-bottom:0.35rem; }
+    #vi-fContent-editor .ql-toolbar.ql-snow button {
+      width:30px; height:30px; border-radius:8px; margin:1px; padding:4px;
+      transition:background 0.12s, color 0.12s;
+    }
+    #vi-fContent-editor .ql-toolbar.ql-snow button svg { width:17px; height:17px; }
+    #vi-fContent-editor .ql-toolbar.ql-snow button:hover,
+    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active,
+    #vi-fContent-editor .ql-toolbar.ql-snow .ql-picker-label:hover,
+    #vi-fContent-editor .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label { background:var(--accent-soft); border-radius:8px; }
+    #vi-fContent-editor .ql-toolbar.ql-snow button:hover .ql-stroke,
+    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active .ql-stroke { stroke:var(--accent); }
+    #vi-fContent-editor .ql-toolbar.ql-snow button:hover .ql-fill,
+    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active .ql-fill { fill:var(--accent); }
+    #vi-fContent-editor .ql-stroke { stroke:var(--muted); stroke-width:1.8; }
+    #vi-fContent-editor .ql-fill { fill:var(--muted); }
+    #vi-fContent-editor .ql-picker-label { color:var(--muted); }
+    #vi-fContent-editor .ql-container.ql-snow { border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; font-size:0.88rem; font-family:'Inter',sans-serif; height:auto; }
+    #vi-fContent-editor .ql-editor { color:var(--text); min-height:260px; padding:16px; line-height:1.7; }
+    #vi-fContent-editor .ql-editor.ql-blank::before { color:var(--muted2); font-style:normal; font-size:0.88rem; left:16px; right:16px; }
+
 
     .field select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9a9a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; padding-right:2rem; }
     .action-btn { padding:0.72rem 1.1rem; border-radius:9px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-size:0.82rem; font-weight:500; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; display:inline-flex; align-items:center; gap:0.4rem; }
@@ -433,8 +468,14 @@
         </div>
 
         <div class="field">
-          <label>Content <span style="font-weight:300;text-transform:none;letter-spacing:0;">(HTML)</span></label>
-          <textarea id="vi-fContent" placeholder="Paste the post's HTML content here..." rows="8" style="font-family:monospace;font-size:0.8rem;"></textarea>
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Content</span>
+            <span id="vi-wordCount" style="text-transform:none; letter-spacing:normal; font-weight:400;">0 words</span>
+          </label>
+          <div class="vi-editor-wrap">
+            <div id="vi-fContent-editor"></div>
+          </div>
+          <textarea id="vi-fContent" style="display:none;"></textarea>
         </div>
 
         <div class="field">
@@ -661,6 +702,34 @@
   const _auth = getAuth(_app);
 
   const _db_media = _rtdb;
+
+  let VI_quill = null;
+  function VI_updateWordCount() {
+    const wc = document.getElementById('vi-wordCount');
+    if (!wc || !VI_quill) return;
+    const text = VI_quill.getText().trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    wc.textContent = words + (words === 1 ? ' word' : ' words');
+  }
+  function VI_initQuill() {
+    if (VI_quill || !document.getElementById('vi-fContent-editor')) return VI_quill;
+    VI_quill = new Quill('#vi-fContent-editor', {
+      theme: 'snow',
+      placeholder: "Start writing your blog post here…",
+      modules: {
+        toolbar: [
+          [{ header: 2 }, 'bold', 'italic', 'underline', 'blockquote', 'code-block', 'formula'],
+          [{ list: 'ordered' }, { list: 'bullet' }, 'link', 'image', 'video', 'clean']
+        ]
+      }
+    });
+    VI_quill.on('text-change', function() {
+      document.getElementById('vi-fContent').value = VI_quill.root.innerHTML;
+      VI_updateWordCount();
+    });
+    return VI_quill;
+  }
+  VI_initQuill();
 
   window.showToast = function(msg, type) {
     type = type || "";
@@ -905,7 +974,7 @@
         const slugRaw  = document.getElementById("vi-fSlug").value.trim();
         const slug     = VI_sanitizeSlug(slugRaw || VI_genSlug(title));
         const img      = document.getElementById("vi-fImg").value.trim();
-        const content  = document.getElementById("vi-fContent").value;
+        const content  = VI_quill ? VI_quill.root.innerHTML : document.getElementById("vi-fContent").value;
         const category = document.getElementById("vi-fCategory").value;
         const desc     = document.getElementById("vi-fDesc").value.trim();
         const tagsRaw  = document.getElementById("vi-fTags").value.trim();
@@ -921,6 +990,7 @@
           const key  = VI_editingKey || slug;
           const existingViews = allPosts[key]?.views || 0;
           const data = { id, title, slug, img, content, category, excerpt: desc, tags, views: existingViews, createdAt: allPosts[key]?.createdAt || Date.now() };
+          if (VI_editingKey) { data.updatedAt = Date.now(); }
           await set(ref(db, 'posts/' + key), data);
           allPosts[key] = data;
           showToast(VI_editingKey ? "Post updated!" : "Post added!", "success");
@@ -943,6 +1013,7 @@
         document.getElementById("vi-fSlug").value    = p.slug    || "";
         document.getElementById("vi-fImg").value     = p.img     || "";
         document.getElementById("vi-fContent").value = p.content || "";
+        if (VI_quill) { VI_quill.root.innerHTML = p.content || ""; VI_updateWordCount(); }
         document.getElementById("vi-fDesc").value    = p.excerpt || "";
         document.getElementById("vi-fTags").value    = Array.isArray(p.tags) ? p.tags.join(", ") : (p.tags || "");
         VI_populateDropdowns(p.category || '');
@@ -959,6 +1030,7 @@
 
       function VI_clearForm() {
         ["vi-fId","vi-fTitle","vi-fSlug","vi-fImg","vi-fContent","vi-fDesc","vi-fTags"].forEach(id => document.getElementById(id).value = "");
+        if (VI_quill) { VI_quill.setText(""); VI_updateWordCount(); }
         VI_populateDropdowns();
         document.getElementById('vi-imgPreview').style.display = 'none';
         document.getElementById("vi-formTitle").textContent = "Add New Post";
@@ -1058,7 +1130,7 @@
 
         try {
           const key  = CT_editingKey || slug;
-          const data = { id, title, slug, img, desc, createdAt: Date.now() };
+          const data = { id, title, slug, img, desc };
           await set(ref(db, 'categories/' + key), data);
           CT_allItems[key] = data;
           showToast(CT_editingKey ? "Category updated!" : "Category added!", "success");
