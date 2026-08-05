@@ -7,21 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #fafaf9; --surface: #ffffff; --border: #ebebeb; --border2: #e0e0e0;
-      --accent: #FF9200; --accent-soft: #ffead0; --text: #1a1a1a; --muted: #9a9a9a;
+      --accent: #FF9200; --accent-soft: #FFEDD5; --text: #1a1a1a; --muted: #9a9a9a;
       --muted2: #c4c4c4; --success: #3a9e6e; --success-soft: #edf7f2;
       --error: #d94f4f; --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0d1117; --surface: #161b22; --border: #30363d; --border2: #3d444d;
-        --accent: #FF9200; --accent-soft: #3d2a12; --text: #e6edf3; --muted: #7d8590;
+        --accent: #FF9200; --accent-soft: #3a2508; --text: #e6edf3; --muted: #7d8590;
         --muted2: #3d444d; --success: #3fb950; --success-soft: #0d2119;
         --error: #f85149; --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
       }
@@ -34,7 +31,7 @@
         #bottomTabBar { box-shadow: 2px 0 20px rgba(0,0,0,0.4); border-right-color: #30363d; }
       }
     }
-
+ 
     body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-user-select:none; user-select:none; }
     input, textarea, select, .fi-name-input { -webkit-user-select:text; user-select:text; }
 
@@ -42,7 +39,7 @@
     @keyframes fadeUp   { from{opacity:0;transform:translateY(12px)}  to{opacity:1;transform:translateY(0)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
     @keyframes shimmer  { to{background-position:-200% 0} }
-
+ 
     /* ── BOTTOM TAB BAR (mobile) ── */
     #bottomTabBar {
       position: fixed; bottom: 12px; left: 28px; right: 28px; z-index: 200;
@@ -110,8 +107,8 @@
         margin-top: auto;
         flex-shrink: 0;
       }
-      #sidebar-brand { display: none; }
-      #sidebar-footer { display: none; }
+    #sidebar-brand { display: none; }
+    #sidebar-footer { display: none; }
       .tab-item {
         flex: none;
         flex-direction: row;
@@ -179,39 +176,53 @@
     .field label { display:block; font-size:0.72rem; color:var(--muted); font-weight:500; margin-bottom:0.28rem; text-transform:uppercase; letter-spacing:0.05em; }
     .field input, .field textarea, .field select { width:100%; padding:0.58rem 0.75rem; border:1px solid var(--border); border-radius:8px; font-size:0.83rem; font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); outline:none; transition:border-color 0.2s; }
     .field input:focus, .field textarea:focus, .field select:focus { border-color:var(--accent); }
+    .quill-editor { background:var(--surface); border-radius:0 0 10px 10px; }
+    .ql-toolbar.ql-snow { border:1.5px solid var(--border2); border-bottom:none; border-radius:10px 10px 0 0; background:var(--bg); display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; column-gap:2px; padding:6px 8px; }
+    .ql-toolbar.ql-snow .ql-formats { margin:0 6px 0 0 !important; display:flex; align-items:center; }
+    .ql-toolbar.ql-snow .ql-formats:last-child { margin-right:0 !important; margin-left:auto; }
+    .ql-toolbar.ql-snow button { width:24px; height:24px; padding:2px; }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source i { font-size:13px; color:var(--muted); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source.ql-active i { color:var(--accent); }
+    .ql-container.ql-snow { border:1.5px solid var(--border2); border-radius:0 0 10px 10px; font-family:'Inter',sans-serif; font-size:0.85rem; height:auto; min-height:140px; transition:border-color 0.15s; }
+    .ql-container.ql-snow:focus-within { border-color:var(--accent); }
+    .ql-editor { height:auto; min-height:140px; overflow-y:visible; color:var(--text); }
+    .ql-editor.ql-blank::before { color:var(--muted); font-style:normal; }
+    .vi-source-textarea { display:none; width:100%; min-height:140px; height:100%; box-sizing:border-box; border:none; outline:none; resize:vertical; padding:12px 15px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.8rem; line-height:1.5; background:var(--surface); color:var(--text); }
+    .ql-editor table.vi-table { width:100%; border-collapse:collapse; margin:0.75rem 0; }
+    .ql-editor table.vi-table td, .ql-editor table.vi-table th { border:1px solid var(--border2); padding:0.4rem 0.6rem; min-width:60px; vertical-align:top; }
+    .ql-snow .ql-stroke { stroke:var(--muted); }
+    .ql-snow .ql-fill { fill:var(--muted); }
+    .ql-snow .ql-picker { color:var(--muted); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-active .ql-stroke { stroke:var(--accent); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-active .ql-fill { fill:var(--accent); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-active { color:var(--accent); }
+    .ql-snow .ql-picker-options { background:var(--surface); border-color:var(--border2); }
+    .ql-snow .ql-tooltip { background:var(--surface); border-color:var(--border2); color:var(--text); box-shadow:var(--shadow); }
+    .ql-snow .ql-tooltip input[type=text] { background:var(--bg); color:var(--text); border-color:var(--border2); }
+    .cat-chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.55rem; }
+    .cat-chip { display:inline-flex; align-items:center; gap:0.35rem; padding:0.3rem 0.55rem 0.3rem 0.4rem; border:1.5px solid var(--accent); background:var(--accent-soft); color:var(--accent); border-radius:20px; font-size:0.76rem; font-weight:600; }
+    .cat-chip .cat-order { display:inline-flex; align-items:center; justify-content:center; min-width:16px; height:16px; padding:0 3px; border-radius:50%; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:700; }
+    .cat-chip .cat-remove { cursor:pointer; font-size:0.85rem; line-height:1; opacity:0.7; padding:0 0.1rem; }
+    .cat-chip .cat-remove:hover { opacity:1; }
     .field textarea { resize:vertical; min-height:70px; }
     .field-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
 
-    /* Quill editor theming */
-    .vi-editor-wrap { display:flex; flex-direction:column; border-radius:8px; transition:box-shadow 0.15s ease; }
-    .vi-editor-wrap:focus-within { box-shadow:0 0 0 3px var(--accent-soft); border-radius:8px; }
-    #vi-fContent-editor .ql-toolbar.ql-snow {
-      border:1px solid var(--border);
-      border-radius:8px 8px 0 0;
-      background:var(--bg);
-      padding:10px 12px;
+    /* ── SEO Description char-limit highlight overlay ── */
+    .seo-desc-wrap { position:relative; }
+    .seo-desc-backdrop {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      margin:0; padding:0.58rem 0.75rem; box-sizing:border-box;
+      border:1px solid transparent; border-radius:8px;
+      font-size:0.83rem; font-family:'Inter',sans-serif; line-height:1.45;
+      white-space:pre-wrap; word-wrap:break-word; overflow:hidden;
+      color:var(--text); pointer-events:none;
     }
-    #vi-fContent-editor .ql-toolbar.ql-snow .ql-formats { margin-right:0.65rem; margin-bottom:0.35rem; }
-    #vi-fContent-editor .ql-toolbar.ql-snow button {
-      width:30px; height:30px; border-radius:8px; margin:1px; padding:4px;
-      transition:background 0.12s, color 0.12s;
+    .seo-desc-backdrop .over-limit { color:#e5484d; }
+    .seo-desc-input.seo-desc-input {
+      position:relative; z-index:1; background:transparent !important;
+      color:transparent; caret-color:var(--text); line-height:1.45;
     }
-    #vi-fContent-editor .ql-toolbar.ql-snow button svg { width:17px; height:17px; }
-    #vi-fContent-editor .ql-toolbar.ql-snow button:hover,
-    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active,
-    #vi-fContent-editor .ql-toolbar.ql-snow .ql-picker-label:hover,
-    #vi-fContent-editor .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label { background:var(--accent-soft); border-radius:8px; }
-    #vi-fContent-editor .ql-toolbar.ql-snow button:hover .ql-stroke,
-    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active .ql-stroke { stroke:var(--accent); }
-    #vi-fContent-editor .ql-toolbar.ql-snow button:hover .ql-fill,
-    #vi-fContent-editor .ql-toolbar.ql-snow button.ql-active .ql-fill { fill:var(--accent); }
-    #vi-fContent-editor .ql-stroke { stroke:var(--muted); stroke-width:1.8; }
-    #vi-fContent-editor .ql-fill { fill:var(--muted); }
-    #vi-fContent-editor .ql-picker-label { color:var(--muted); }
-    #vi-fContent-editor .ql-container.ql-snow { border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; font-size:0.88rem; font-family:'Inter',sans-serif; height:auto; }
-    #vi-fContent-editor .ql-editor { color:var(--text); min-height:260px; padding:16px; line-height:1.7; }
-    #vi-fContent-editor .ql-editor.ql-blank::before { color:var(--muted2); font-style:normal; font-size:0.88rem; left:16px; right:16px; }
-
+    .seo-desc-input.seo-desc-input::placeholder { color:var(--muted); }
 
     .field select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9a9a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; padding-right:2rem; }
     .action-btn { padding:0.72rem 1.1rem; border-radius:9px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-size:0.82rem; font-weight:500; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; display:inline-flex; align-items:center; gap:0.4rem; }
@@ -455,7 +466,8 @@
         <div class="field-row">
           <div class="field" style="grid-column:1/-1;">
             <label>Category</label>
-            <select id="vi-fCategory"><option value="">Loading...</option></select>
+            <select id="vi-fCategory" onchange="VI_addCategory(this.value); this.value='';"><option value="">— Select Category —</option></select>
+            <div id="vi-fCategoryChips" class="cat-chips"></div>
           </div>
         </div>
 
@@ -468,24 +480,16 @@
         </div>
 
         <div class="field">
-          <label style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Content</span>
-            <span id="vi-wordCount" style="text-transform:none; letter-spacing:normal; font-weight:400;">0 words</span>
-          </label>
-          <div class="vi-editor-wrap">
-            <div id="vi-fContent-editor"></div>
+          <label style="display:flex;justify-content:space-between;align-items:center;">Content <span id="vi-wordCount" style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);">0 Words</span></label>
+          <div id="vi-fContentEditor" class="quill-editor"></div>
+        </div>
+
+        <div class="field">
+          <label style="display:flex;justify-content:space-between;align-items:center;">SEO Description <span id="vi-descCount" style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);">0 / 160</span></label>
+          <div class="seo-desc-wrap">
+            <div id="vi-fDescBackdrop" class="seo-desc-backdrop"></div>
+            <textarea id="vi-fDesc" class="seo-desc-input" placeholder="Short summary shown in the post list..." rows="3" oninput="VI_updateDescCount()" onscroll="VI_syncDescScroll()"></textarea>
           </div>
-          <textarea id="vi-fContent" style="display:none;"></textarea>
-        </div>
-
-        <div class="field">
-          <label>Excerpt</label>
-          <textarea id="vi-fDesc" placeholder="Short summary shown in the post list..." rows="3"></textarea>
-        </div>
-
-        <div class="field">
-          <label>Tags <span style="font-weight:300;text-transform:none;letter-spacing:0;">(comma separated)</span></label>
-          <input type="text" id="vi-fTags" placeholder="e.g. fiction, bangla, history"/>
         </div>
 
         <div class="btn-row">
@@ -681,6 +685,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, set, get, remove, child, update, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -702,34 +707,6 @@
   const _auth = getAuth(_app);
 
   const _db_media = _rtdb;
-
-  let VI_quill = null;
-  function VI_updateWordCount() {
-    const wc = document.getElementById('vi-wordCount');
-    if (!wc || !VI_quill) return;
-    const text = VI_quill.getText().trim();
-    const words = text ? text.split(/\s+/).length : 0;
-    wc.textContent = words + (words === 1 ? ' word' : ' words');
-  }
-  function VI_initQuill() {
-    if (VI_quill || !document.getElementById('vi-fContent-editor')) return VI_quill;
-    VI_quill = new Quill('#vi-fContent-editor', {
-      theme: 'snow',
-      placeholder: "Start writing your blog post here…",
-      modules: {
-        toolbar: [
-          [{ header: 2 }, 'bold', 'italic', 'underline', 'blockquote', 'code-block', 'formula'],
-          [{ list: 'ordered' }, { list: 'bullet' }, 'link', 'image', 'video', 'clean']
-        ]
-      }
-    });
-    VI_quill.on('text-change', function() {
-      document.getElementById('vi-fContent').value = VI_quill.root.innerHTML;
-      VI_updateWordCount();
-    });
-    return VI_quill;
-  }
-  VI_initQuill();
 
   window.showToast = function(msg, type) {
     type = type || "";
@@ -898,6 +875,104 @@
       let allPosts      = {};
       let VI_editingKey = null;
       let VI_categories = {};
+      let VI_selectedCats = [];
+      function VI_promptEmbed(quill, format, label) {
+        const url = window.prompt('Enter ' + label + ' URL:');
+        if (url) {
+          const range = quill.getSelection(true);
+          quill.insertEmbed(range.index, format, url, 'user');
+          quill.setSelection(range.index + 1);
+        }
+      }
+      const VI_icons = Quill.import('ui/icons');
+      VI_icons['header']['3'] = '<svg viewBox="0 0 18 18"><path class="ql-fill" d="M16.65186,12.30664a2.6742,2.6742,0,0,1-2.915,2.68457,3.96592,3.96592,0,0,1-2.25537-.6709.56007.56007,0,0,1-.13232-.83594L11.64648,13c.209-.34082.48389-.36328.82471-.1543a2.32654,2.32654,0,0,0,1.12256.33008c.71484,0,1.12207-.35156,1.12207-.78125,0-.61523-.61621-.86816-1.46338-.86816H13.2085a.65159.65159,0,0,1-.68213-.41895l-.05518-.10937a.67114.67114,0,0,1,.14307-.78125l.71533-.86914a8.55289,8.55289,0,0,1,.68213-.7373V8.58887a3.93913,3.93913,0,0,1-.748.05469H11.9873a.54085.54085,0,0,1-.605-.60547V7.59863a.54085.54085,0,0,1,.605-.60547h3.75146a.53773.53773,0,0,1,.60547.59375v.17676a1.03723,1.03723,0,0,1-.27539.748L14.74854,10.0293A2.31132,2.31132,0,0,1,16.65186,12.30664ZM9,3A.99974.99974,0,0,0,8,4V8H3V4A1,1,0,0,0,1,4V14a1,1,0,0,0,2,0V10H8v4a1,1,0,0,0,2,0V4A.99974.99974,0,0,0,9,3Z"/></svg>';
+      VI_icons['source'] = '<i class="fa-solid fa-eye"></i>';
+      const VI_quill = new Quill('#vi-fContentEditor', {
+        theme: 'snow',
+        placeholder: "Write the post's content here...",
+        modules: {
+          toolbar: {
+            container: [
+              [{ header: 2 }, { header: 3 }],
+              ['bold', 'italic', 'underline'],
+              [{ list: 'ordered' }, { list: 'bullet' }],
+              ['blockquote', 'code-block', 'link'],
+              ['image', 'video'],
+              ['source']
+            ],
+            handlers: {
+              image: function() { VI_promptEmbed(this.quill, 'image', 'Image'); },
+              video: function() { VI_promptEmbed(this.quill, 'video', 'Video'); },
+              source: function() {
+                const btn = this.container.querySelector('button.ql-source');
+                VI_toggleSourceView(this.quill, btn);
+              }
+            }
+          }
+        }
+      });
+      const VI_sourceTextarea = document.createElement('textarea');
+      VI_sourceTextarea.id = 'vi-fContentSource';
+      VI_sourceTextarea.className = 'vi-source-textarea';
+      VI_sourceTextarea.spellcheck = false;
+      VI_quill.container.appendChild(VI_sourceTextarea);
+      let VI_sourceMode = false;
+      function VI_toggleSourceView(quill, btn) {
+        if (!VI_sourceMode) {
+          const h = quill.root.offsetHeight;
+          VI_sourceTextarea.value = quill.root.innerHTML;
+          VI_sourceTextarea.style.height = h + 'px';
+          quill.root.style.display = 'none';
+          VI_sourceTextarea.style.display = 'block';
+          VI_sourceTextarea.focus();
+          VI_sourceMode = true;
+          if (btn) btn.classList.add('ql-active');
+        } else {
+          quill.setContents(quill.clipboard.convert(VI_sourceTextarea.value));
+          quill.root.style.display = '';
+          VI_sourceTextarea.style.display = 'none';
+          VI_sourceTextarea.style.height = '';
+          VI_sourceMode = false;
+          if (btn) btn.classList.remove('ql-active');
+          VI_updateWordCount();
+        }
+      }
+      function VI_updateWordCount() {
+        const text = VI_quill.getText().trim();
+        const count = text ? text.split(/\s+/).length : 0;
+        document.getElementById('vi-wordCount').textContent = count + (count === 1 ? ' Word' : ' Words');
+      }
+      VI_quill.on('text-change', VI_updateWordCount);
+
+      // ─── SEO Description char limit (160) ─────────────────
+      const VI_DESC_LIMIT = 160;
+      function VI_escHtml(s) {
+        return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      window.VI_updateDescCount = function() {
+        const ta  = document.getElementById('vi-fDesc');
+        const bd  = document.getElementById('vi-fDescBackdrop');
+        const cnt = document.getElementById('vi-descCount');
+        const val = ta.value;
+        const len = val.length;
+
+        cnt.textContent = len + ' / ' + VI_DESC_LIMIT;
+        cnt.style.color = len > VI_DESC_LIMIT ? '#e5484d' : 'var(--muted)';
+
+        if (len <= VI_DESC_LIMIT) {
+          bd.innerHTML = VI_escHtml(val) + '&nbsp;';
+        } else {
+          const normal = VI_escHtml(val.slice(0, VI_DESC_LIMIT));
+          const excess = VI_escHtml(val.slice(VI_DESC_LIMIT));
+          bd.innerHTML = normal + '<span class="over-limit">' + excess + '</span>&nbsp;';
+        }
+        bd.scrollTop = ta.scrollTop;
+      };
+      window.VI_syncDescScroll = function() {
+        const ta = document.getElementById('vi-fDesc');
+        const bd = document.getElementById('vi-fDescBackdrop');
+        bd.scrollTop = ta.scrollTop;
+      };
 
       // ─── ID gen ───────────────────────────────────────────
       function VI_sanitizeSlug(s) {
@@ -922,13 +997,39 @@
         }
       }
 
-      function VI_populateDropdowns(selCat='') {
-        const catSel  = document.getElementById('vi-fCategory');
-        catSel.innerHTML = '<option value="">— Select Category —</option>' +
-          Object.entries(VI_categories).map(([id, c]) =>
-            `<option value="${id}" ${selCat===id?'selected':''}>${VI_esc(c.title || c.name || id)}</option>`
-          ).join('');
+      function VI_populateDropdowns(selCats=[]) {
+        VI_selectedCats = Array.isArray(selCats) ? [...selCats] : (selCats ? [selCats] : []);
+        VI_renderCategoryPicker();
       }
+
+      function VI_renderCategoryPicker() {
+        const sel  = document.getElementById('vi-fCategory');
+        const chips = document.getElementById('vi-fCategoryChips');
+        const entries = Object.entries(VI_categories);
+
+        sel.innerHTML = '<option value="">— Select Category —</option>' +
+          entries
+            .filter(([id]) => !VI_selectedCats.includes(id))
+            .map(([id, c]) => `<option value="${id}">${VI_esc(c.title || c.name || id)}</option>`)
+            .join('');
+
+        chips.innerHTML = VI_selectedCats.map((id, idx) => {
+          const c = VI_categories[id];
+          const name = c ? (c.title || c.name || id) : id;
+          return `<span class="cat-chip"><span class="cat-order">${idx+1}</span>${VI_esc(name)}<span class="cat-remove" onclick="VI_removeCategory('${id}')">✕</span></span>`;
+        }).join('');
+      }
+
+      window.VI_addCategory = function(id) {
+        if (!id || VI_selectedCats.includes(id)) return;
+        VI_selectedCats.push(id);
+        VI_renderCategoryPicker();
+      };
+
+      window.VI_removeCategory = function(id) {
+        VI_selectedCats = VI_selectedCats.filter(c => c !== id);
+        VI_renderCategoryPicker();
+      };
 
       // ─── LOAD posts ────────────────────────────────────────
       window.VI_loadAll = async function() {
@@ -958,7 +1059,10 @@
             const imgTag = p.img
               ? `<img class="li-thumb" src="${VI_esc(p.img)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt=""/><div class="li-thumb-placeholder" style="display:none;">📝</div>`
               : `<div class="li-thumb-placeholder">📝</div>`;
-            const catName = VI_categories[p.category]?.title || VI_categories[p.category]?.name || p.category || '—';
+            const catIds = Array.isArray(p.category) ? p.category : (p.category ? [p.category] : []);
+            const catName = catIds.length
+              ? catIds.map(cid => VI_categories[cid]?.title || VI_categories[cid]?.name || cid).join(', ')
+              : '—';
             return `<div class="list-item">${imgTag}<div class="li-info"><div class="li-name">${VI_esc(p.title || key)}</div><div class="li-meta"><span class="li-id">#${VI_esc(String(p.id||'—'))}</span><span class="li-cat">${VI_esc(catName)}</span></div></div><div class="li-actions"><button class="si-btn edit" onclick="VI_editItem('${key}')">Edit</button><button class="si-btn del" style="color:#e53e3e;border-color:#e53e3e;" onclick="VI_deleteItem('${key}')">Delete</button></div></div>`;
           },
           `<div class="empty-state"><div class="empty-icon">📝</div>No posts yet. Add one above!</div>`
@@ -969,16 +1073,15 @@
 
       // ─── SUBMIT ──────────────────────────────────────────
       window.VI_submitPost = async function() {
+        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
         const id       = parseInt(document.getElementById("vi-fId").value) || 0;
         const title    = document.getElementById("vi-fTitle").value.trim();
         const slugRaw  = document.getElementById("vi-fSlug").value.trim();
         const slug     = VI_sanitizeSlug(slugRaw || VI_genSlug(title));
         const img      = document.getElementById("vi-fImg").value.trim();
-        const content  = VI_quill ? VI_quill.root.innerHTML : document.getElementById("vi-fContent").value;
-        const category = document.getElementById("vi-fCategory").value;
+        const content  = VI_quill.root.innerHTML.trim() === '<p><br></p>' ? '' : VI_quill.root.innerHTML;
+        const category = [...VI_selectedCats];
         const desc     = document.getElementById("vi-fDesc").value.trim();
-        const tagsRaw  = document.getElementById("vi-fTags").value.trim();
-        const tags     = tagsRaw ? tagsRaw.split(",").map(t => t.trim()).filter(Boolean) : [];
 
         if (!title) { showToast("Title is required!", "error-t"); return; }
         if (!slug)  { showToast("Slug is required!", "error-t"); return; }
@@ -989,8 +1092,9 @@
         try {
           const key  = VI_editingKey || slug;
           const existingViews = allPosts[key]?.views || 0;
-          const data = { id, title, slug, img, content, category, excerpt: desc, tags, views: existingViews, createdAt: allPosts[key]?.createdAt || Date.now() };
-          if (VI_editingKey) { data.updatedAt = Date.now(); }
+          const isUpdate = !!VI_editingKey;
+          const data = { id, title, slug, img, content, category, seoDesc: desc, views: existingViews, createdAt: allPosts[key]?.createdAt || Date.now() };
+          if (isUpdate) data.updatedAt = Date.now();
           await set(ref(db, 'posts/' + key), data);
           allPosts[key] = data;
           showToast(VI_editingKey ? "Post updated!" : "Post added!", "success");
@@ -1008,15 +1112,16 @@
       window.VI_editItem = function(key) {
         const p = allPosts[key]; if (!p) return;
         VI_editingKey = key;
+        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
         document.getElementById("vi-fId").value      = p.id      || "";
         document.getElementById("vi-fTitle").value   = p.title   || "";
         document.getElementById("vi-fSlug").value    = p.slug    || "";
         document.getElementById("vi-fImg").value     = p.img     || "";
-        document.getElementById("vi-fContent").value = p.content || "";
-        if (VI_quill) { VI_quill.root.innerHTML = p.content || ""; VI_updateWordCount(); }
-        document.getElementById("vi-fDesc").value    = p.excerpt || "";
-        document.getElementById("vi-fTags").value    = Array.isArray(p.tags) ? p.tags.join(", ") : (p.tags || "");
-        VI_populateDropdowns(p.category || '');
+        VI_quill.root.innerHTML = p.content || "";
+        VI_updateWordCount();
+        document.getElementById("vi-fDesc").value    = p.seoDesc || p.excerpt || "";
+        VI_updateDescCount();
+        VI_populateDropdowns(Array.isArray(p.category) ? p.category : (p.category ? [p.category] : []));
         if (p.img) {
           document.getElementById('vi-imgThumb').src = p.img;
           document.getElementById('vi-imgPreview').style.display = 'block';
@@ -1029,8 +1134,11 @@
       window.VI_cancelEdit = function() { VI_editingKey = null; VI_clearForm(); };
 
       function VI_clearForm() {
-        ["vi-fId","vi-fTitle","vi-fSlug","vi-fImg","vi-fContent","vi-fDesc","vi-fTags"].forEach(id => document.getElementById(id).value = "");
-        if (VI_quill) { VI_quill.setText(""); VI_updateWordCount(); }
+        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
+        ["vi-fId","vi-fTitle","vi-fSlug","vi-fImg","vi-fDesc"].forEach(id => document.getElementById(id).value = "");
+        VI_quill.root.innerHTML = "";
+        VI_updateWordCount();
+        VI_updateDescCount();
         VI_populateDropdowns();
         document.getElementById('vi-imgPreview').style.display = 'none';
         document.getElementById("vi-formTitle").textContent = "Add New Post";
