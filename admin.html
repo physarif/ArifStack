@@ -181,13 +181,15 @@
     .ql-toolbar.ql-snow .ql-formats { margin:0 6px 0 0 !important; display:flex; align-items:center; }
     .ql-toolbar.ql-snow .ql-formats:last-child { margin-right:0 !important; margin-left:auto; }
     .ql-toolbar.ql-snow button { width:24px; height:24px; padding:2px; }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source i { font-size:13px; color:var(--muted); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source.ql-active i { color:var(--accent); }
-    .ql-container.ql-snow { border:1.5px solid var(--border2); border-radius:0 0 10px 10px; font-family:'Inter',sans-serif; font-size:0.85rem; height:auto; min-height:140px; transition:border-color 0.15s; }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source { border-radius:6px; width:28px; height:28px; transition:background-color .15s ease,color .15s ease; }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source i { font-size:16px; color:var(--muted); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source.vi-active { background:var(--accent-soft); }
+    .ql-toolbar.ql-snow .ql-formats button.ql-source.vi-active i { color:var(--accent); }
+    .ql-container.ql-snow { border:1.5px solid var(--border2); border-radius:0 0 10px 10px; font-family:'Inter',sans-serif; font-size:0.85rem; height:auto; min-height:180px; transition:border-color 0.15s; }
     .ql-container.ql-snow:focus-within { border-color:var(--accent); }
-    .ql-editor { height:auto; min-height:140px; overflow-y:visible; color:var(--text); }
+    .ql-editor { height:auto; min-height:180px; overflow-y:visible; color:var(--text); }
     .ql-editor.ql-blank::before { color:var(--muted); font-style:normal; }
-    .vi-source-textarea { display:none; width:100%; min-height:140px; height:100%; box-sizing:border-box; border:none; outline:none; resize:vertical; padding:12px 15px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.8rem; line-height:1.5; background:var(--surface); color:var(--text); }
+    .vi-source-textarea { display:none; width:100%; min-height:180px; height:100%; box-sizing:border-box; border:none; outline:none; resize:vertical; padding:12px 15px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.8rem; line-height:1.5; background:var(--surface); color:var(--text); }
     .ql-editor table.vi-table { width:100%; border-collapse:collapse; margin:0.75rem 0; }
     .ql-editor table.vi-table td, .ql-editor table.vi-table th { border:1px solid var(--border2); padding:0.4rem 0.6rem; min-width:60px; vertical-align:top; }
     .ql-snow .ql-stroke { stroke:var(--muted); }
@@ -264,6 +266,7 @@
 
     /* ── LIST ITEMS (shared across channel/station/episode/etc) ── */
     .item-list { display:flex; flex-direction:column; padding:0 1.5rem; }
+    #vi-itemList { padding:0 0.5rem; }
     .list-item { display:flex; align-items:center; gap:0.9rem; padding:0.9rem 0; border-bottom:1px solid var(--border); animation:fadeUp 0.3s ease both; }
     .list-item:last-child { border-bottom:none; }
     .li-thumb { width:38px; height:38px; flex-shrink:0; border-radius:9px; border:1px solid var(--border); background:var(--bg); object-fit:cover; display:block; }
@@ -277,6 +280,24 @@
     .si-btn { padding:0.22rem 0.55rem; font-size:0.7rem; font-weight:500; border-radius:5px; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; border:1px solid var(--border); background:var(--surface); color:var(--muted); }
     .si-btn.edit:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); }
     .si-btn.del:hover { border-color:var(--error); color:var(--error); }
+
+    /* ── Post card (Telegraph-style) ── */
+    .pc-card { padding:0.6rem 0 1.2rem; border-bottom:1px solid var(--border); animation:fadeUp 0.3s ease both; }
+    .pc-card:last-child { border-bottom:none; padding-bottom:0.6rem; }
+    .pc-top { display:flex; gap:0.85rem; align-items:flex-start; }
+    .pc-cover { width:96px; height:54px; flex-shrink:0; border-radius:10px; border:1px solid var(--border); background:var(--bg); object-fit:cover; display:block; }
+    .pc-cover-placeholder { width:96px; height:54px; flex-shrink:0; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+    .pc-info { flex:1; min-width:0; }
+    .pc-date { font-size:0.72rem; color:var(--muted); margin-bottom:0.15rem; }
+    .pc-title { font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:500; color:var(--text); line-height:1.28; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:0.2rem; }
+    .pc-link { font-size:0.76rem; color:var(--accent); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .pc-bottom { display:flex; align-items:center; justify-content:space-between; margin-top:0.85rem; }
+    .pc-actions-left { display:flex; gap:0.4rem; }
+    .pc-txt-btn { padding:0.22rem 0.55rem; font-size:0.66rem; font-weight:500; border-radius:7px; cursor:pointer; font-family:'Inter',sans-serif; transition:filter 0.15s; border:1.5px solid var(--border2); background:var(--surface); color:var(--muted); }
+    .pc-txt-btn:active { filter:brightness(0.96); }
+    .pc-txt-btn.del { border-color:#E5484D; color:#E5484D; }
+    .pc-txt-btn.copy { border-color:#2FA860; color:#2FA860; }
+    .pc-cat-pill { font-size:0.66rem; font-weight:500; color:var(--accent); background:var(--surface); border:1.5px solid var(--accent); padding:0.22rem 0.55rem; border-radius:7px; max-width:150px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
     /* ── TOGGLE ── */
     .toggle-field { display:flex; align-items:center; justify-content:space-between; padding:0.62rem 0.75rem; border:1px solid var(--border); border-radius:8px; background:var(--bg); margin-bottom:0.85rem; }
@@ -447,15 +468,9 @@
       <div class="card" id="vi-addCard">
         <div class="card-title" id="vi-formTitle">Add New Post</div>
 
-        <div class="field-row" style="grid-template-columns: 0.7fr 1.3fr;">
-          <div class="field">
-            <label>ID <span style="font-weight:300;text-transform:none;letter-spacing:0;">(numeric)</span></label>
-            <input type="number" id="vi-fId" placeholder="e.g. 101" min="1" step="1"/>
-          </div>
-          <div class="field">
-            <label>Slug <span style="font-weight:300;text-transform:none;letter-spacing:0;">(also used as ID)</span></label>
-            <input type="text" id="vi-fSlug" placeholder="e.g. my-post-title"/>
-          </div>
+        <div class="field">
+          <label>Slug <span style="font-weight:300;text-transform:none;letter-spacing:0;">(also used as ID)</span></label>
+          <input type="text" id="vi-fSlug" placeholder="e.g. my-post-title"/>
         </div>
 
         <div class="field">
@@ -926,14 +941,14 @@
           VI_sourceTextarea.style.display = 'block';
           VI_sourceTextarea.focus();
           VI_sourceMode = true;
-          if (btn) btn.classList.add('ql-active');
+          if (btn) btn.classList.add('vi-active');
         } else {
           quill.setContents(quill.clipboard.convert(VI_sourceTextarea.value));
           quill.root.style.display = '';
           VI_sourceTextarea.style.display = 'none';
           VI_sourceTextarea.style.height = '';
           VI_sourceMode = false;
-          if (btn) btn.classList.remove('ql-active');
+          if (btn) btn.classList.remove('vi-active');
           VI_updateWordCount();
         }
       }
@@ -1046,24 +1061,59 @@
       };
 
       // ─── RENDER ──────────────────────────────────────────
+      function VI_formatPostDate(ts) {
+        if (!ts) return '';
+        const d = new Date(ts);
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let h = d.getHours();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12; if (h === 0) h = 12;
+        const hh = String(h).padStart(2, '0');
+        const mm = String(d.getMinutes()).padStart(2, '0');
+        return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}, ${hh}:${mm} ${ampm}`;
+      }
+      window.VI_copyPostLink = function(slug) {
+        const url = `arifstack.pages.dev/posts/${slug}`;
+        navigator.clipboard.writeText(url).catch(() => {
+          showToast("Failed to copy link", "error-t");
+        });
+      };
       function VI_renderItems() {
         const list = document.getElementById("vi-itemList");
         const q = (document.getElementById("vi-searchInput").value || "").toLowerCase();
         let entries = Object.entries(allPosts).filter(([,p]) =>
           !q || (p.title||"").toLowerCase().includes(q)
         );
-        entries.sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+        entries.sort((a, b) => (b[1].updatedAt || b[1].createdAt || 0) - (a[1].updatedAt || a[1].createdAt || 0));
         document.getElementById("vi-itemCount").textContent = entries.length + " post" + (entries.length !== 1 ? "s" : "");
         createPager(entries, list, "vi-sentinel",
           ([key, p]) => {
             const imgTag = p.img
-              ? `<img class="li-thumb" src="${VI_esc(p.img)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt=""/><div class="li-thumb-placeholder" style="display:none;">📝</div>`
-              : `<div class="li-thumb-placeholder">📝</div>`;
+              ? `<img class="pc-cover" src="${VI_esc(p.img)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt=""/><div class="pc-cover-placeholder" style="display:none;">📝</div>`
+              : `<div class="pc-cover-placeholder">📝</div>`;
             const catIds = Array.isArray(p.category) ? p.category : (p.category ? [p.category] : []);
             const catName = catIds.length
               ? catIds.map(cid => VI_categories[cid]?.title || VI_categories[cid]?.name || cid).join(', ')
               : '—';
-            return `<div class="list-item">${imgTag}<div class="li-info"><div class="li-name">${VI_esc(p.title || key)}</div><div class="li-meta"><span class="li-id">#${VI_esc(String(p.id||'—'))}</span><span class="li-cat">${VI_esc(catName)}</span></div></div><div class="li-actions"><button class="si-btn edit" onclick="VI_editItem('${key}')">Edit</button><button class="si-btn del" style="color:#e53e3e;border-color:#e53e3e;" onclick="VI_deleteItem('${key}')">Delete</button></div></div>`;
+            const slug = VI_esc(key);
+            return `<div class="pc-card">
+              <div class="pc-top">
+                ${imgTag}
+                <div class="pc-info">
+                  <div class="pc-date">${VI_formatPostDate(p.updatedAt || p.createdAt)}</div>
+                  <div class="pc-title">${VI_esc(p.title || key)}</div>
+                  <div class="pc-link">arifstack.pages.dev/posts/${slug}</div>
+                </div>
+              </div>
+              <div class="pc-bottom">
+                <div class="pc-actions-left">
+                  <button class="pc-txt-btn edit" onclick="VI_editItem('${key}')">Edit</button>
+                  <button class="pc-txt-btn del" onclick="VI_deleteItem('${key}')">Delete</button>
+                  <button class="pc-txt-btn copy" onclick="VI_copyPostLink('${key}')">Copy</button>
+                </div>
+                <div class="pc-cat-pill">${VI_esc(catName)}</div>
+              </div>
+            </div>`;
           },
           `<div class="empty-state"><div class="empty-icon">📝</div>No posts yet. Add one above!</div>`
         );
@@ -1074,7 +1124,6 @@
       // ─── SUBMIT ──────────────────────────────────────────
       window.VI_submitPost = async function() {
         if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
-        const id       = parseInt(document.getElementById("vi-fId").value) || 0;
         const title    = document.getElementById("vi-fTitle").value.trim();
         const slugRaw  = document.getElementById("vi-fSlug").value.trim();
         const slug     = VI_sanitizeSlug(slugRaw || VI_genSlug(title));
@@ -1092,8 +1141,9 @@
         try {
           const key  = VI_editingKey || slug;
           const existingViews = allPosts[key]?.views || 0;
+          const existingId = allPosts[key]?.id || 0;
           const isUpdate = !!VI_editingKey;
-          const data = { id, title, slug, img, content, category, seoDesc: desc, views: existingViews, createdAt: allPosts[key]?.createdAt || Date.now() };
+          const data = { id: existingId, title, slug, img, content, category, seoDesc: desc, views: existingViews, createdAt: allPosts[key]?.createdAt || Date.now() };
           if (isUpdate) data.updatedAt = Date.now();
           await set(ref(db, 'posts/' + key), data);
           allPosts[key] = data;
@@ -1113,7 +1163,6 @@
         const p = allPosts[key]; if (!p) return;
         VI_editingKey = key;
         if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
-        document.getElementById("vi-fId").value      = p.id      || "";
         document.getElementById("vi-fTitle").value   = p.title   || "";
         document.getElementById("vi-fSlug").value    = p.slug    || "";
         document.getElementById("vi-fImg").value     = p.img     || "";
@@ -1135,7 +1184,7 @@
 
       function VI_clearForm() {
         if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
-        ["vi-fId","vi-fTitle","vi-fSlug","vi-fImg","vi-fDesc"].forEach(id => document.getElementById(id).value = "");
+        ["vi-fTitle","vi-fSlug","vi-fImg","vi-fDesc"].forEach(id => document.getElementById(id).value = "");
         VI_quill.root.innerHTML = "";
         VI_updateWordCount();
         VI_updateDescCount();
@@ -1304,13 +1353,8 @@
       var db = _db_media;
       var auth = _auth;
 
-      // ── Cloudflare R2 config ─────────────────────────────────────────────
-      const R2_ACCOUNT_ID  = 'e55cff90ef185c0bc9ab5ddffb1946a4';
-      const R2_BUCKET      = 'pathokghar';
-      const R2_ACCESS_KEY  = 'e1a3c8df7b65456a12a4e566700d7c0d';
-      const R2_SECRET_KEY  = 'a5e49c36f2be4f207f53ca8d640395ff0fe73c7685b440ff88328b0230d04046';
-      const R2_PUBLIC_URL  = 'https://pub-acb9a5572a494ce7bc8eda8d8999f562.r2.dev';
-      const R2_ENDPOINT    = `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`;
+      // ── Media upload/delete now goes through Cloudflare Pages Functions ──
+      // (see /functions/api/upload.js and /functions/api/delete.js — no keys in client code)
 
         // ── Helpers ──────────────────────────────────────────────────────────
         function MD_fmtSize(b) {
@@ -1493,34 +1537,7 @@
           return MD_uploadItemR2(item);
         }
 
-        // ── AWS Signature V4 helpers ───────────────────────────────────────
-        async function _sha256(message) {
-          const msgBuffer = new TextEncoder().encode(message);
-          const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-          return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
-        }
-
-        async function _hmacSha256(key, message) {
-          const keyData = typeof key === 'string' ? new TextEncoder().encode(key) : key;
-          const msgData = new TextEncoder().encode(message);
-          const cryptoKey = await crypto.subtle.importKey('raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-          const sig = await crypto.subtle.sign('HMAC', cryptoKey, msgData);
-          return new Uint8Array(sig);
-        }
-
-        async function _getSignatureKey(secret, dateStamp, region, service) {
-          const kDate    = await _hmacSha256('AWS4' + secret, dateStamp);
-          const kRegion  = await _hmacSha256(kDate, region);
-          const kService = await _hmacSha256(kRegion, service);
-          const kSigning = await _hmacSha256(kService, 'aws4_request');
-          return kSigning;
-        }
-
-        function _toHex(buf) {
-          return Array.from(buf).map(b => b.toString(16).padStart(2,'0')).join('');
-        }
-
-        // ── Cloudflare R2 upload ───────────────────────────────────────────
+        // ── Cloudflare R2 upload (via Pages Function, keeps keys server-side) ──
         function MD_uploadItemR2(item) {
           return new Promise(async resolve => {
             item.status = 'uploading';
@@ -1531,56 +1548,13 @@
               const file = item.file;
               const ext  = file.name.split('.').pop();
               const key  = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-              const url  = `${R2_ENDPOINT}/${R2_BUCKET}/${key}`;
 
-              // Build signing values
-              const now       = new Date();
-              const amzDate   = now.toISOString().replace(/[:-]|\.\d{3}/g,'').slice(0,15) + 'Z';
-              const dateStamp = amzDate.slice(0,8);
-              const region    = 'auto';
-              const service   = 's3';
+              const formData = new FormData();
+              formData.append('file', file);
+              formData.append('key', key);
 
-              // Use UNSIGNED-PAYLOAD to avoid browser content-type normalization issues
-              const payloadHash = 'UNSIGNED-PAYLOAD';
-
-              const canonicalHeaders =
-                `host:${R2_ACCOUNT_ID}.r2.cloudflarestorage.com\n` +
-                `x-amz-content-sha256:${payloadHash}\n` +
-                `x-amz-date:${amzDate}\n`;
-
-              const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
-
-              const canonicalRequest = [
-                'PUT',
-                `/${R2_BUCKET}/${key}`,
-                '',
-                canonicalHeaders,
-                signedHeaders,
-                payloadHash
-              ].join('\n');
-
-              const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
-              const stringToSign = [
-                'AWS4-HMAC-SHA256',
-                amzDate,
-                credentialScope,
-                await _sha256(canonicalRequest)
-              ].join('\n');
-
-              const signingKey = await _getSignatureKey(R2_SECRET_KEY, dateStamp, region, service);
-              const signature  = _toHex(await _hmacSha256(signingKey, stringToSign));
-
-              const authorization =
-                `AWS4-HMAC-SHA256 Credential=${R2_ACCESS_KEY}/${credentialScope}, ` +
-                `SignedHeaders=${signedHeaders}, Signature=${signature}`;
-
-              // XHR upload with progress
               const xhr = new XMLHttpRequest();
-              xhr.open('PUT', url);
-              xhr.setRequestHeader('Content-Type', file.type);
-              xhr.setRequestHeader('x-amz-content-sha256', payloadHash);
-              xhr.setRequestHeader('x-amz-date', amzDate);
-              xhr.setRequestHeader('Authorization', authorization);
+              xhr.open('POST', '/api/upload');
 
               xhr.upload.onprogress = e => {
                 if (e.lengthComputable) {
@@ -1591,7 +1565,16 @@
 
               xhr.onload = async () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                  const publicUrl = `${R2_PUBLIC_URL}/${key}`;
+                  let json;
+                  try { json = JSON.parse(xhr.responseText); } catch(e) { json = null; }
+                  if (!json || !json.url) {
+                    item.status = 'error';
+                    item.errorMsg = 'Upload failed (bad response)';
+                    MD_renderQueue();
+                    resolve();
+                    return;
+                  }
+                  const publicUrl = json.url;
                   item.url = publicUrl;
                   item.status = 'done';
                   try {
@@ -1615,7 +1598,7 @@
               };
 
               xhr.onerror = () => { item.status = 'error'; item.errorMsg = 'Network error'; MD_renderQueue(); resolve(); };
-              xhr.send(file);
+              xhr.send(formData);
 
             } catch(err) {
               item.status = 'error';
@@ -1768,52 +1751,11 @@
 
           if (fileData?.r2Key) {
               try {
-                const key       = fileData.r2Key;
-                const now       = new Date();
-                const amzDate   = now.toISOString().replace(/[:-]|\.\d{3}/g,'').slice(0,15) + 'Z';
-                const dateStamp = amzDate.slice(0,8);
-                const region    = 'auto';
-                const service   = 's3';
-                const payloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; // empty body
-
-                const canonicalHeaders =
-                  `host:${R2_ACCOUNT_ID}.r2.cloudflarestorage.com\n` +
-                  `x-amz-content-sha256:${payloadHash}\n` +
-                  `x-amz-date:${amzDate}\n`;
-                const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
-
-                const canonicalRequest = [
-                  'DELETE',
-                  `/${R2_BUCKET}/${key}`,
-                  '',
-                  canonicalHeaders,
-                  signedHeaders,
-                  payloadHash
-                ].join('\n');
-
-                const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
-                const stringToSign = [
-                  'AWS4-HMAC-SHA256',
-                  amzDate,
-                  credentialScope,
-                  await _sha256(canonicalRequest)
-                ].join('\n');
-
-                const signingKey = await _getSignatureKey(R2_SECRET_KEY, dateStamp, region, service);
-                const signature  = _toHex(await _hmacSha256(signingKey, stringToSign));
-
-                const authorization =
-                  `AWS4-HMAC-SHA256 Credential=${R2_ACCESS_KEY}/${credentialScope}, ` +
-                  `SignedHeaders=${signedHeaders}, Signature=${signature}`;
-
-                fetch(`${R2_ENDPOINT}/${R2_BUCKET}/${key}`, {
-                  method: 'DELETE',
-                  headers: {
-                    'x-amz-content-sha256': payloadHash,
-                    'x-amz-date': amzDate,
-                    'Authorization': authorization,
-                  }
-                }).catch(e => console.warn('R2 delete error:', e));
+                await fetch('/api/delete', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ key: fileData.r2Key })
+                });
               } catch(e) { console.warn('R2 delete error:', e); }
             }
             remove(ref(db, 'media/' + id)).then(() => {
