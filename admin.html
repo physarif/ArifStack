@@ -175,6 +175,7 @@
     .field { margin-bottom:0.85rem; }
     .field label { display:block; font-size:0.72rem; color:var(--muted); font-weight:500; margin-bottom:0.28rem; text-transform:uppercase; letter-spacing:0.05em; }
     .field input, .field textarea, .field select { width:100%; padding:0.58rem 0.75rem; border:1px solid var(--border); border-radius:8px; font-size:0.83rem; font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); outline:none; transition:border-color 0.2s; }
+    .field input.input-error { border-color:#E5484D !important; color:#E5484D !important; }
     .field input:focus, .field textarea:focus, .field select:focus { border-color:var(--accent); }
     .quill-editor { background:var(--surface); border-radius:0 0 10px 10px; }
     .ql-toolbar.ql-snow { border:1.5px solid var(--border2); border-bottom:none; border-radius:10px 10px 0 0; background:var(--bg); display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; column-gap:2px; padding:6px 8px; }
@@ -470,7 +471,7 @@
 
         <div class="field">
           <label>Slug <span style="font-weight:300;text-transform:none;letter-spacing:0;">(also used as ID)</span></label>
-          <input type="text" id="vi-fSlug" placeholder="e.g. my-post-title"/>
+          <input type="text" id="vi-fSlug" placeholder="e.g. my-post-title" oninput="VI_checkSlugDuplicate()"/>
         </div>
 
         <div class="field">
@@ -571,7 +572,7 @@
           </div>
           <div class="field">
             <label>Slug <span style="font-weight:300;text-transform:none;letter-spacing:0;">(also used as ID)</span></label>
-            <input type="text" id="ct-fSlug" placeholder="e.g. fiction"/>
+            <input type="text" id="ct-fSlug" placeholder="e.g. fiction" oninput="CT_checkSlugDuplicate()"/>
           </div>
         </div>
 
@@ -996,6 +997,13 @@
       function VI_genSlug(title) {
         return title.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/[\s_-]+/g,'-');
       }
+      window.VI_checkSlugDuplicate = function() {
+        const input = document.getElementById('vi-fSlug');
+        const slug  = VI_sanitizeSlug(input.value.trim());
+        const isDup = !!slug && !!allPosts[slug] && slug !== VI_editingKey;
+        input.classList.toggle('input-error', isDup);
+        return isDup;
+      };
       function VI_esc(str) {
         if (!str) return "";
         return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -1134,6 +1142,11 @@
 
         if (!title) { showToast("Title is required!", "error-t"); return; }
         if (!slug)  { showToast("Slug is required!", "error-t"); return; }
+        if (allPosts[slug] && slug !== VI_editingKey) {
+          document.getElementById("vi-fSlug").classList.add('input-error');
+          showToast("This slug already exists! Choose a different one.", "error-t");
+          return;
+        }
 
         const btn = document.getElementById("vi-submitBtn");
         btn.disabled = true; btn.textContent = "Saving...";
@@ -1165,6 +1178,7 @@
         if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
         document.getElementById("vi-fTitle").value   = p.title   || "";
         document.getElementById("vi-fSlug").value    = p.slug    || "";
+        document.getElementById("vi-fSlug").classList.remove('input-error');
         document.getElementById("vi-fImg").value     = p.img     || "";
         VI_quill.root.innerHTML = p.content || "";
         VI_updateWordCount();
@@ -1185,6 +1199,7 @@
       function VI_clearForm() {
         if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
         ["vi-fTitle","vi-fSlug","vi-fImg","vi-fDesc"].forEach(id => document.getElementById(id).value = "");
+        document.getElementById("vi-fSlug").classList.remove('input-error');
         VI_quill.root.innerHTML = "";
         VI_updateWordCount();
         VI_updateDescCount();
@@ -1234,6 +1249,14 @@
         return title.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim();
       }
 
+      window.CT_checkSlugDuplicate = function() {
+        const input = document.getElementById('ct-fSlug');
+        const slug  = CT_sanitizeSlug(input.value.trim());
+        const isDup = !!slug && !!CT_allItems[slug] && slug !== CT_editingKey;
+        input.classList.toggle('input-error', isDup);
+        return isDup;
+      };
+
       // ─── LOAD ──────────────────────────────────────────────
       window.CT_loadAll = async function() {
         const btn = document.getElementById("ct-refreshBtn");
@@ -1281,6 +1304,11 @@
 
         if (!title) { showToast("Title is required!", "error-t"); return; }
         if (!slug) { showToast("Slug is required!", "error-t"); return; }
+        if (CT_allItems[slug] && slug !== CT_editingKey) {
+          document.getElementById("ct-fSlug").classList.add('input-error');
+          showToast("This slug already exists! Choose a different one.", "error-t");
+          return;
+        }
 
         const btn = document.getElementById("ct-submitBtn");
         btn.disabled = true; btn.textContent = "Saving...";
@@ -1308,6 +1336,7 @@
         document.getElementById("ct-fId").value    = c.id    || "";
         document.getElementById("ct-fTitle").value = c.title || "";
         document.getElementById("ct-fSlug").value  = c.slug  || "";
+        document.getElementById("ct-fSlug").classList.remove('input-error');
         document.getElementById("ct-fImg").value   = c.img   || "";
         document.getElementById("ct-fDesc").value  = c.desc  || "";
         if (c.img) {
@@ -1327,6 +1356,7 @@
           if (el) el.value = "";
         });
         document.getElementById('ct-imgPreview').style.display = 'none';
+        document.getElementById("ct-fSlug").classList.remove('input-error');
         document.getElementById("ct-formTitle").textContent = "Add New Category";
         document.getElementById("ct-submitBtn").innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Category`;
         CT_editingKey = null;
