@@ -6,7 +6,6 @@
   <title>Arif Stack — Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -177,34 +176,29 @@
     .field input, .field textarea, .field select { width:100%; padding:0.58rem 0.75rem; border:1px solid var(--border); border-radius:8px; font-size:0.83rem; font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); outline:none; transition:border-color 0.2s; }
     .field input.input-error { border-color:#E5484D !important; color:#E5484D !important; }
     .field input:focus, .field textarea:focus, .field select:focus { border-color:var(--accent); }
-    .quill-editor { background:var(--surface); border-radius:0 0 10px 10px; }
-    .ql-toolbar.ql-snow { border:1.5px solid var(--border2); border-bottom:none; border-radius:10px 10px 0 0; background:var(--bg); display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; column-gap:2px; padding:6px 8px; }
-    .ql-toolbar.ql-snow .ql-formats { margin:0 6px 0 0 !important; display:flex; align-items:center; }
-    .ql-toolbar.ql-snow .ql-formats:last-child { margin-right:0 !important; margin-left:auto; }
-    .ql-toolbar.ql-snow button { width:24px; height:24px; padding:2px; }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source { border-radius:6px; width:28px; height:28px; transition:background-color .15s ease,color .15s ease; }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source i { font-size:16px; color:var(--muted); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source.vi-active { background:var(--accent-soft); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-source.vi-active i { color:var(--accent); }
-    .ql-container.ql-snow { border:1.5px solid var(--border2); border-radius:0 0 10px 10px; font-family:'Inter',sans-serif; font-size:0.85rem; height:auto; min-height:180px; transition:border-color 0.15s; }
-    .ql-container.ql-snow:focus-within { border-color:var(--accent); }
-    .ql-editor { height:auto; min-height:180px; overflow-y:visible; color:var(--text); }
-    .ql-editor.ql-blank::before { color:var(--muted); font-style:normal; }
-    .vi-source-textarea { display:none; width:100%; min-height:180px; height:100%; box-sizing:border-box; border:none; outline:none; resize:vertical; padding:12px 15px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.8rem; line-height:1.5; background:var(--surface); color:var(--text); }
-    .ql-editor table.vi-table { width:100%; border-collapse:collapse; margin:0.75rem 0; }
-    .ql-editor table.vi-table td, .ql-editor table.vi-table th { border:1px solid var(--border2); padding:0.4rem 0.6rem; min-width:60px; vertical-align:top; }
-    .ql-editor table.vi-table { cursor:default; }
-    .ql-editor table.vi-table th { background:var(--bg); font-weight:600; }
-    .ql-editor table.vi-table caption { caption-side:bottom; font-size:0.75rem; color:var(--muted); padding-top:4px; text-align:left; }
-    .ql-snow .ql-stroke { stroke:var(--muted); }
-    .ql-snow .ql-fill { fill:var(--muted); }
-    .ql-snow .ql-picker { color:var(--muted); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-active .ql-stroke { stroke:var(--accent); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-active .ql-fill { fill:var(--accent); }
-    .ql-toolbar.ql-snow .ql-formats button.ql-active { color:var(--accent); }
-    .ql-snow .ql-picker-options { background:var(--surface); border-color:var(--border2); }
-    .ql-snow .ql-tooltip { background:var(--surface); border-color:var(--border2); color:var(--text); box-shadow:var(--shadow); }
-    .ql-snow .ql-tooltip input[type=text] { background:var(--bg); color:var(--text); border-color:var(--border2); }
+    .vi-editor-wrap { background:var(--surface); border-radius:10px; }
+    .vi-editor-toolbar { border:1.5px solid var(--border2); border-bottom:none; border-radius:10px 10px 0 0; background:var(--bg); display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; column-gap:2px; padding:6px 8px; }
+    .vi-ed-btn { width:26px; height:26px; border:none; background:transparent; border-radius:6px; color:var(--muted); font-size:0.78rem; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; transition:background-color .15s ease,color .15s ease; }
+    .vi-ed-btn i { font-size:0.78rem; }
+    .vi-ed-btn:hover { background:var(--accent-soft); color:var(--accent); }
+    .vi-ed-btn.vi-active { background:var(--accent-soft); color:var(--accent); }
+    .vi-ed-btn#vi-ed-source { margin-left:auto; }
+    .vi-ed-sep { width:1px; height:18px; background:var(--border2); margin:0 4px; }
+    .vi-editor-body { border:1.5px solid var(--border2); border-radius:0 0 10px 10px; font-family:'Inter',sans-serif; font-size:0.85rem; min-height:180px; height:auto; color:var(--text); padding:12px 15px; outline:none; overflow-y:visible; transition:border-color 0.15s; }
+    .vi-editor-body:focus { border-color:var(--accent); }
+    .vi-editor-body:empty::before { content:attr(data-placeholder); color:var(--muted); }
+    .vi-editor-body p { margin:0 0 0.75em; }
+    .vi-editor-body h2, .vi-editor-body h3 { margin:0.9em 0 0.4em; }
+    .vi-editor-body ul, .vi-editor-body ol { margin:0 0 0.75em; padding-left:1.5em; }
+    .vi-editor-body li { margin:0 0 0.25em; }
+    .vi-editor-body blockquote { border-left:3px solid var(--border2); margin:0.75em 0; padding:0.2em 0.9em; color:var(--muted); }
+    .vi-editor-body pre { background:var(--bg); border:1px solid var(--border2); border-radius:6px; padding:0.6em 0.8em; overflow-x:auto; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.78rem; }
+    .vi-editor-body img, .vi-editor-body iframe { max-width:100%; }
+    .vi-source-textarea { display:none; width:100%; min-height:180px; height:100%; box-sizing:border-box; border:1.5px solid var(--border2); border-top:none; border-radius:0 0 10px 10px; outline:none; resize:vertical; padding:12px 15px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.8rem; line-height:1.5; background:var(--surface); color:var(--text); }
+    .vi-editor-body table.vi-table, .vi-source-textarea ~ table.vi-table { width:100%; border-collapse:collapse; margin:0.75rem 0; }
+    .vi-editor-body table.vi-table td, .vi-editor-body table.vi-table th { border:1px solid var(--border2); padding:0.4rem 0.6rem; min-width:60px; vertical-align:top; }
+    .vi-editor-body table.vi-table th { background:var(--bg); font-weight:600; }
+    .vi-editor-body table.vi-table caption { caption-side:bottom; font-size:0.75rem; color:var(--muted); padding-top:4px; text-align:left; }
     .cat-chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.55rem; }
     .cat-chip { display:inline-flex; align-items:center; gap:0.35rem; padding:0.3rem 0.55rem 0.3rem 0.4rem; border:1.5px solid var(--accent); background:var(--accent-soft); color:var(--accent); border-radius:20px; font-size:0.76rem; font-weight:600; }
     .cat-chip .cat-order { display:inline-flex; align-items:center; justify-content:center; min-width:16px; height:16px; padding:0 3px; border-radius:50%; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:700; }
@@ -500,7 +494,32 @@
 
         <div class="field">
           <label style="display:flex;justify-content:space-between;align-items:center;">Content <span id="vi-wordCount" style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);">0 Words</span></label>
-          <div id="vi-fContentEditor" class="quill-editor"></div>
+          <div class="vi-editor-wrap">
+            <div class="vi-editor-toolbar" id="vi-editorToolbar">
+              <button type="button" class="vi-ed-btn" data-cmd="formatBlock" data-val="H2" title="Heading 2" style="font-weight:700;">H2</button>
+              <button type="button" class="vi-ed-btn" data-cmd="formatBlock" data-val="H3" title="Heading 3" style="font-weight:700;">H3</button>
+              <span class="vi-ed-sep"></span>
+              <button type="button" class="vi-ed-btn" data-cmd="undo" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+              <button type="button" class="vi-ed-btn" data-cmd="redo" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+              <span class="vi-ed-sep"></span>
+              <button type="button" class="vi-ed-btn" data-cmd="bold" title="Bold"><i class="fa-solid fa-bold"></i></button>
+              <button type="button" class="vi-ed-btn" data-cmd="italic" title="Italic"><i class="fa-solid fa-italic"></i></button>
+              <button type="button" class="vi-ed-btn" data-cmd="underline" title="Underline"><i class="fa-solid fa-underline"></i></button>
+              <span class="vi-ed-sep"></span>
+              <button type="button" class="vi-ed-btn" data-cmd="insertOrderedList" title="Numbered list"><i class="fa-solid fa-list-ol"></i></button>
+              <button type="button" class="vi-ed-btn" data-cmd="insertUnorderedList" title="Bullet list"><i class="fa-solid fa-list-ul"></i></button>
+              <span class="vi-ed-sep"></span>
+              <button type="button" class="vi-ed-btn" data-cmd="formatBlock" data-val="BLOCKQUOTE" title="Blockquote"><i class="fa-solid fa-quote-right"></i></button>
+              <button type="button" class="vi-ed-btn" data-cmd="formatBlock" data-val="PRE" title="Code block"><i class="fa-solid fa-code"></i></button>
+              <button type="button" class="vi-ed-btn" id="vi-ed-link" title="Link"><i class="fa-solid fa-link"></i></button>
+              <span class="vi-ed-sep"></span>
+              <button type="button" class="vi-ed-btn" id="vi-ed-image" title="Image"><i class="fa-solid fa-image"></i></button>
+              <button type="button" class="vi-ed-btn" id="vi-ed-video" title="Video/Embed"><i class="fa-solid fa-video"></i></button>
+              <button type="button" class="vi-ed-btn" id="vi-ed-source" title="HTML source"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <div id="vi-fContentEditor" class="vi-editor-body" contenteditable="true" data-placeholder="Write the post's content here..."></div>
+            <textarea id="vi-fContentSource" class="vi-source-textarea" spellcheck="false"></textarea>
+          </div>
         </div>
 
         <div class="field">
@@ -704,7 +723,6 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, set, get, remove, child, update, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -895,102 +913,68 @@
       let VI_editingKey = null;
       let VI_categories = {};
       let VI_selectedCats = [];
-      function VI_promptEmbed(quill, format, label) {
-        const url = window.prompt('Enter ' + label + ' URL:');
-        if (url) {
-          const range = quill.getSelection(true);
-          quill.insertEmbed(range.index, format, url, 'user');
-          quill.setSelection(range.index + 1);
-        }
-      }
-      const VI_icons = Quill.import('ui/icons');
-      VI_icons['header']['3'] = '<svg viewBox="0 0 18 18"><path class="ql-fill" d="M16.65186,12.30664a2.6742,2.6742,0,0,1-2.915,2.68457,3.96592,3.96592,0,0,1-2.25537-.6709.56007.56007,0,0,1-.13232-.83594L11.64648,13c.209-.34082.48389-.36328.82471-.1543a2.32654,2.32654,0,0,0,1.12256.33008c.71484,0,1.12207-.35156,1.12207-.78125,0-.61523-.61621-.86816-1.46338-.86816H13.2085a.65159.65159,0,0,1-.68213-.41895l-.05518-.10937a.67114.67114,0,0,1,.14307-.78125l.71533-.86914a8.55289,8.55289,0,0,1,.68213-.7373V8.58887a3.93913,3.93913,0,0,1-.748.05469H11.9873a.54085.54085,0,0,1-.605-.60547V7.59863a.54085.54085,0,0,1,.605-.60547h3.75146a.53773.53773,0,0,1,.60547.59375v.17676a1.03723,1.03723,0,0,1-.27539.748L14.74854,10.0293A2.31132,2.31132,0,0,1,16.65186,12.30664ZM9,3A.99974.99974,0,0,0,8,4V8H3V4A1,1,0,0,0,1,4V14a1,1,0,0,0,2,0V10H8v4a1,1,0,0,0,2,0V4A.99974.99974,0,0,0,9,3Z"/></svg>';
-      VI_icons['source'] = '<i class="fa-solid fa-eye"></i>';
-      const VI_quill = new Quill('#vi-fContentEditor', {
-        theme: 'snow',
-        placeholder: "Write the post's content here...",
-        modules: {
-          toolbar: {
-            container: [
-              [{ header: 2 }, { header: 3 }],
-              ['bold', 'italic', 'underline'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              ['blockquote', 'code-block', 'link'],
-              ['image', 'video'],
-              ['source']
-            ],
-            handlers: {
-              image: function() { VI_promptEmbed(this.quill, 'image', 'Image'); },
-              video: function() { VI_promptEmbed(this.quill, 'video', 'Video'); },
-              source: function() {
-                const btn = this.container.querySelector('button.ql-source');
-                VI_toggleSourceView(this.quill, btn);
-              }
-            }
-          }
-        }
-      });
-      // ─── TABLE SUPPORT ────────────────────────────────────
-      // Quill 1.3.7 has no built-in table blot, so <table> written in the
-      // HTML source view gets stripped when switching back to normal view.
-      // This registers a block-embed blot that keeps the table intact and
-      // renders it (non-editable cell-by-cell — edit table markup via the
-      // source/HTML view) whenever it's parsed from HTML.
-      const VI_BlockEmbed = Quill.import('blots/block/embed');
-      class VI_TableBlot extends VI_BlockEmbed {
-        static create(value) {
-          const node = super.create();
-          node.innerHTML = value;
-          node.setAttribute('contenteditable', 'false');
-          return node;
-        }
-        static value(node) {
-          return node.innerHTML;
-        }
-      }
-      VI_TableBlot.blotName = 'tableHtml';
-      VI_TableBlot.tagName = 'table';
-      VI_TableBlot.className = 'vi-table';
-      Quill.register(VI_TableBlot, true);
-
-      VI_quill.clipboard.addMatcher('table', function(node) {
-        const VI_Delta = Quill.import('delta');
-        return new VI_Delta().insert({ tableHtml: node.innerHTML });
-      });
-      // ────────────────────────────────────────────────────────
-
-      const VI_sourceTextarea = document.createElement('textarea');
-      VI_sourceTextarea.id = 'vi-fContentSource';
-      VI_sourceTextarea.className = 'vi-source-textarea';
-      VI_sourceTextarea.spellcheck = false;
-      VI_quill.container.appendChild(VI_sourceTextarea);
+      // ─── CONTENT EDITOR (plain contenteditable — full HTML/CSS support) ───
+      // Not using Quill/Delta here on purpose: any HTML/CSS the user writes
+      // in the source view (tables, custom classes, inline styles, iframes,
+      // etc.) is preserved exactly as-is, with no parser stripping anything.
+      const VI_editorEl = document.getElementById('vi-fContentEditor');
+      const VI_sourceTextarea = document.getElementById('vi-fContentSource');
       let VI_sourceMode = false;
-      function VI_toggleSourceView(quill, btn) {
+
+      document.querySelectorAll('#vi-editorToolbar .vi-ed-btn[data-cmd]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          VI_editorEl.focus();
+          document.execCommand(btn.dataset.cmd, false, btn.dataset.val || null);
+          VI_updateWordCount();
+        });
+      });
+      document.getElementById('vi-ed-link').addEventListener('click', function() {
+        const url = window.prompt('Enter link URL:');
+        if (url) { VI_editorEl.focus(); document.execCommand('createLink', false, url); }
+      });
+      document.getElementById('vi-ed-image').addEventListener('click', function() {
+        const url = window.prompt('Enter Image URL:');
+        if (url) { VI_editorEl.focus(); document.execCommand('insertImage', false, url); }
+      });
+      document.getElementById('vi-ed-video').addEventListener('click', function() {
+        const url = window.prompt('Enter Video URL (embeddable, e.g. YouTube embed link):');
+        if (url) {
+          VI_editorEl.focus();
+          document.execCommand('insertHTML', false,
+            '<p><iframe src="' + url + '" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;"></iframe></p><p><br></p>');
+        }
+      });
+
+      const VI_sourceBtn = document.getElementById('vi-ed-source');
+      function VI_toggleSourceView() {
         if (!VI_sourceMode) {
-          const h = quill.root.offsetHeight;
-          VI_sourceTextarea.value = quill.root.innerHTML;
+          const h = VI_editorEl.offsetHeight;
+          VI_sourceTextarea.value = VI_editorEl.innerHTML.trim();
           VI_sourceTextarea.style.height = h + 'px';
-          quill.root.style.display = 'none';
+          VI_editorEl.style.display = 'none';
           VI_sourceTextarea.style.display = 'block';
           VI_sourceTextarea.focus();
           VI_sourceMode = true;
-          if (btn) btn.classList.add('vi-active');
+          if (VI_sourceBtn) VI_sourceBtn.classList.add('vi-active');
         } else {
-          quill.setContents(quill.clipboard.convert(VI_sourceTextarea.value));
-          quill.root.style.display = '';
+          VI_editorEl.innerHTML = VI_sourceTextarea.value;
+          VI_editorEl.style.display = '';
           VI_sourceTextarea.style.display = 'none';
           VI_sourceTextarea.style.height = '';
           VI_sourceMode = false;
-          if (btn) btn.classList.remove('vi-active');
+          if (VI_sourceBtn) VI_sourceBtn.classList.remove('vi-active');
           VI_updateWordCount();
         }
       }
+      VI_sourceBtn.addEventListener('click', VI_toggleSourceView);
+
       function VI_updateWordCount() {
-        const text = VI_quill.getText().trim();
+        const text = VI_editorEl.textContent.trim();
         const count = text ? text.split(/\s+/).length : 0;
         document.getElementById('vi-wordCount').textContent = count + (count === 1 ? ' Word' : ' Words');
       }
-      VI_quill.on('text-change', VI_updateWordCount);
+      VI_editorEl.addEventListener('input', VI_updateWordCount);
+      // ─────────────────────────────────────────────────────────────────
 
       // ─── SEO Description char limit (160) ─────────────────
       const VI_DESC_LIMIT = 160;
@@ -1163,12 +1147,13 @@
 
       // ─── SUBMIT ──────────────────────────────────────────
       window.VI_submitPost = async function() {
-        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
+        if (VI_sourceMode) { VI_toggleSourceView(); }
         const title    = document.getElementById("vi-fTitle").value.trim();
         const slugRaw  = document.getElementById("vi-fSlug").value.trim();
         const slug     = VI_sanitizeSlug(slugRaw || VI_genSlug(title));
         const img      = document.getElementById("vi-fImg").value.trim();
-        const content  = VI_quill.root.innerHTML.trim() === '<p><br></p>' ? '' : VI_quill.root.innerHTML;
+        const contentRaw = VI_editorEl.innerHTML.trim();
+        const content  = (contentRaw === '<p><br></p>' || contentRaw === '<br>') ? '' : contentRaw;
         const category = [...VI_selectedCats];
         const desc     = document.getElementById("vi-fDesc").value.trim();
 
@@ -1207,12 +1192,12 @@
       window.VI_editItem = function(key) {
         const p = allPosts[key]; if (!p) return;
         VI_editingKey = key;
-        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
+        if (VI_sourceMode) { VI_toggleSourceView(); }
         document.getElementById("vi-fTitle").value   = p.title   || "";
         document.getElementById("vi-fSlug").value    = p.slug    || "";
         document.getElementById("vi-fSlug").classList.remove('input-error');
         document.getElementById("vi-fImg").value     = p.img     || "";
-        VI_quill.setContents(VI_quill.clipboard.convert(p.content || ""));
+        VI_editorEl.innerHTML = p.content || "";
         VI_updateWordCount();
         document.getElementById("vi-fDesc").value    = p.seoDesc || p.excerpt || "";
         VI_updateDescCount();
@@ -1229,10 +1214,10 @@
       window.VI_cancelEdit = function() { VI_editingKey = null; VI_clearForm(); };
 
       function VI_clearForm() {
-        if (VI_sourceMode) { VI_toggleSourceView(VI_quill, document.querySelector('button.ql-source')); }
+        if (VI_sourceMode) { VI_toggleSourceView(); }
         ["vi-fTitle","vi-fSlug","vi-fImg","vi-fDesc"].forEach(id => document.getElementById(id).value = "");
         document.getElementById("vi-fSlug").classList.remove('input-error');
-        VI_quill.root.innerHTML = "";
+        VI_editorEl.innerHTML = "";
         VI_updateWordCount();
         VI_updateDescCount();
         VI_populateDropdowns();
